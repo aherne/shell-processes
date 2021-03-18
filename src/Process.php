@@ -1,10 +1,10 @@
 <?php
 namespace Lucinda\Process;
 
+use Lucinda\Process\Process\Status;
+
 /**
-
-    I would advice not using mkfifo-pipes, because filesystem fifo-pipe (mkfifo) blocks open/fopen call (!!!) until somebody opens other side (unix-related behavior). In case the pipe is opened not by shell and the command is crashed or is not exists you will be blocked forever.
-
+ * Encapsulates process handling on top of proc_open/proc_close functions
  */
 class Process
 {
@@ -15,11 +15,23 @@ class Process
     private $fileDescriptor;
     private $streams = [];
     
+    /**
+     * Constructs a process by shell command
+     *
+     * @param string $command Shell command to execute.
+     * @param bool $autoEscape Whether or not command should be escaped using escapeshellcmd
+     */
     public function __construct(string $command, bool $autoEscape = true)
     {
         $this->command = ($autoEscape?escapeshellcmd($command):$command);
     }
     
+    /**
+     * Sets working directory command should be executed from
+     *
+     * @param string $workingDirectory Absolute path to to working directory
+     * @throws Exception If directory doesn't exist
+     */
     public function setWorkingDirectory(string $workingDirectory): void
     {
         if (!is_dir($workingDirectory)) {
@@ -28,58 +40,102 @@ class Process
         $this->workingDirectory = $workingDirectory;
     }
     
+    /**
+     * Adds environment variable to be made available in process to execute
+     *
+     * @param string $key
+     * @param string $value
+     */
     public function addEnvironmentVariable(string $key, string $value): void
     {
         $this->environmentVariables[$key] = $value;
     }
     
+    /**
+     * Adds a stream to be tracked for process to execute
+     *
+     * @param int $fileDescriptorNumber One of \Lucinda\Process\Stream\Type enum values or a custom number greater than 2
+     * @param Stream $stream Stream to be tracked
+     */
     public function addStream(int $fileDescriptorNumber, Stream $stream): void
     {
         $this->streams[$fileDescriptorNumber] = $stream;
     }
         
-    public function open(): void
+    /**
+     * Starts process
+     *
+     * @return bool Whether operation was successful or not
+     */
+    public function open(): bool
     {
         $descriptors = [];
         foreach ($this->streams as $fileDescriptorNumber=>$object) {
-            $descriptors[$fileDescriptorNumber] = $object->getDescriptorData();
+            $descriptors[$fileDescriptorNumber] = $object->getDescriptorSpecification();
         }
         
         $pipes = [];
         $resource = proc_open($this->command, $descriptors, $pipes, $this->workingDirectory, $this->environmentVariables);
         if ($resource === false || !is_resource($resource)) {
-            throw new Exception("Process could not be created");
+            return false;
         }
         $this->fileDescriptor = $resource;
                 
         foreach ($pipes as $fileDescriptorNumber=>$childFileDescriptor) {
             $this->streams[$fileDescriptorNumber]->setFileDescriptor($childFileDescriptor);
         }
+        
+        return true;
     }
     
+    /**
+     * Checks if process still exists
+     *
+     * @return bool
+     */
     public function isOpen(): bool
     {
-        return $this->fileDescriptor!==null;
+        return is_resource($this->fileDescriptor);
     }
     
+    /**
+     * Gets process status information
+     *
+     * @return Status
+     */
+    public function getStatus(): Status
+    {
+        return new Status($this->fileDescriptor);
+    }
+    
+    /**
+     * Gets stream of running process
+     *
+     * @param int $fileDescriptorNumber One of \Lucinda\Process\Stream\Type enum values or a custom number greater than 2
+     * @return Stream|NULL Corresponding stream or NULL if not found.
+     */
     public function getStream(int $fileDescriptorNumber): ?Stream
     {
         return (isset($this->streams[$fileDescriptorNumber])?$this->streams[$fileDescriptorNumber]:null);
     }
     
-    public function getStatus(): ProcessStatus
-    {
-        return new ProcessStatus($this->fileDescriptor);
-    }
-    
+    /**
+     * Terminates (kills) process
+     *
+     * @return bool Whether operation was successful or not
+     */
     public function terminate(): bool
     {
-        return proc_terminate($this->fileDescriptor);
+        return proc_terminate($this->fileDescriptor, SIGKILL);
     }
     
+    /**
+     * Closes process gracefully
+     *
+     * @return bool Whether operation was successful or not
+     */
     public function close(): bool
     {
         return proc_close($this->fileDescriptor)!==-1;
     }
 }
-// https://gist.github.com/sergant210/ca6e67889f892974a37b211f24cfd125

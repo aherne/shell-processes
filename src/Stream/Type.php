@@ -1,6 +1,9 @@
 <?php
 namespace Lucinda\Process\Stream;
 
+/**
+ * Enum collecting standard stream types
+ */
 interface Type
 {
     const STDIN = 0;

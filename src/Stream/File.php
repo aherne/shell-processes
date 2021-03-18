@@ -1,11 +1,23 @@
 <?php
 namespace Lucinda\Process\Stream;
 
+use Lucinda\Process\Stream\File\Mode;
+
+/**
+ * Encapsulates a stream that uses a file underneath
+ */
 class File extends \Lucinda\Process\Stream
 {
     private $filePath;
     private $mode;
     
+    /**
+     * Sets location of file data will be streamed into
+     *
+     * @param string $filePath Absolute location of file data will be streamed into
+     * @param Mode $fileMode One of enum values, identifying file access mode.
+     * @throws Exception If invalid file mode is supplied
+     */
     public function __construct(string $filePath, string $fileMode)
     {
         if (!in_array($fileMode, ["r", "w", "a"])) {
@@ -15,6 +27,10 @@ class File extends \Lucinda\Process\Stream
         $this->mode = $fileMode;
     }
     
+    /**
+     * {@inheritDoc}
+     * @see \Lucinda\Process\Stream::getDescriptorSpecification()
+     */
     public function getDescriptorSpecification()
     {
         return ["file", $this->filePath, $this->mode];
