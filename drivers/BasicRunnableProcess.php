@@ -7,6 +7,9 @@ use Lucinda\Process\Pool\Result\Status;
 use Lucinda\Process\Stream\File\Mode;
 use Lucinda\Process\Pool\Runnable;
 use Lucinda\Process\Stream\Pipe;
+use Lucinda\Process\Stream\Select;
+use Lucinda\Process\Stream\Select\InterruptedException;
+use Lucinda\Process\Stream\Select\TimeoutException;
 
 /**
  * Simple runnable process using STDOUT+STDERR unnamed pipes what work with strings
@@ -31,22 +34,19 @@ class BasicRunnableProcess extends Runnable
      */
     public function handle(): Result
     {
+        // initializes streams
         $stdout = $this->streams[Type::STDOUT];
         $stderr = $this->streams[Type::STDERR];
         $timeStarted = time();
-        
-        $read = [$stdout->getFileDescriptor(), $stderr->getFileDescriptor()];
-        $write = null;
-        $except = null;
-        $result = stream_select($read, $write, $except, $this->timeout);
-        if ($result===false) {
-            // this can happen if the system call is interrupted by an incoming signal
-            return $this->compileResult(Status::INTERRUPTED, "", $timeStarted);
-        } elseif ($result===0) {
-            // timeout expired
-            $this->process->terminate();
-            return $this->compileResult(Status::TERMINATED, "", $timeStarted);
-        } else {
+                
+        // sets up select call
+        $select = new Select($this->timeout);
+        $select->addStream($stdout);
+        $select->addStream($stderr);
+        try {
+            // runs select call
+            $select->run();
+            
             // assumes stream is small enough to be retrieved in one iteration
             $output = $stdout->read();
             $error = $stderr->read();
@@ -55,6 +55,11 @@ class BasicRunnableProcess extends Runnable
             } else {
                 return $this->compileResult(Status::COMPLETED, $output, $timeStarted);
             }
+        } catch (InterruptedException $e) {
+            return $this->compileResult(Status::INTERRUPTED, "", $timeStarted);
+        } catch (TimeoutException $e) {
+            $this->process->terminate();
+            return $this->compileResult(Status::TERMINATED, "", $timeStarted);
         }
     }
     

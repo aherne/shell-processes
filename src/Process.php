@@ -1,6 +1,7 @@
 <?php
 namespace Lucinda\Process;
 
+use Lucinda\Process\Process\Exception;
 use Lucinda\Process\Process\Status;
 
 /**

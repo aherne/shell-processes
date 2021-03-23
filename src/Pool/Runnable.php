@@ -44,11 +44,6 @@ abstract class Runnable
             $this->process->addStream($type, $stream);
         }
         $this->process->open();
-        foreach ($this->streams as $stream) {
-            if ($stream instanceof Pipe) {
-                $stream->setBlocking(false);
-            }
-        }
     }
     
     /**
