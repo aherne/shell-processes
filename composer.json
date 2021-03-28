@@ -1,8 +1,8 @@
 {
     "name": "lucinda/process",
     "type": "library",
-    "description": "Light weight library encapsulating shell processes and pools",
-    "keywords": ["stdin", "stdout", "stderr", "streams","process","pool"],
+    "description": "Light weight API performing single/multiple shell command execution using IO multiplexing",
+    "keywords": ["stdin", "stdout", "stderr", "streams","process","pool", "io multiplexing"],
     "license": "MIT",
     "require": {
         "php": "^7.1",
