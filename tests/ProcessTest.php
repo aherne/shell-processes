@@ -1,10 +1,10 @@
 <?php
-namespace Test\Lucinda\Process;
+namespace Test\Lucinda\Shell;
 
-use Lucinda\Process\Process;
-use Lucinda\Process\Stream\Pipe;
-use Lucinda\Process\Stream\File\Mode;
-use Lucinda\Process\Stream\Type;
+use Lucinda\Shell\Process;
+use Lucinda\Shell\Stream\Pipe;
+use Lucinda\Shell\Stream\File\Mode;
+use Lucinda\Shell\Stream\Type;
 use Lucinda\UnitTest\Result;
 
 class ProcessTest

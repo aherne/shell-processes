@@ -1,8 +1,8 @@
 <?php
-namespace Lucinda\Process;
+namespace Lucinda\Shell;
 
-use Lucinda\Process\Process\Exception;
-use Lucinda\Process\Process\Status;
+use Lucinda\Shell\Process\Exception;
+use Lucinda\Shell\Process\Status;
 
 /**
  * Encapsulates process handling on top of proc_open/proc_close functions
@@ -55,7 +55,7 @@ class Process
     /**
      * Adds a stream to be tracked for process to execute
      *
-     * @param int $fileDescriptorNumber One of \Lucinda\Process\Stream\Type enum values or a custom number greater than 2
+     * @param int $fileDescriptorNumber One of \Lucinda\Shell\Stream\Type enum values or a custom number greater than 2
      * @param Stream $stream Stream to be tracked
      */
     public function addStream(int $fileDescriptorNumber, Stream $stream): void
@@ -112,7 +112,7 @@ class Process
     /**
      * Gets stream of running process
      *
-     * @param int $fileDescriptorNumber One of \Lucinda\Process\Stream\Type enum values or a custom number greater than 2
+     * @param int $fileDescriptorNumber One of \Lucinda\Shell\Stream\Type enum values or a custom number greater than 2
      * @return Stream|NULL Corresponding stream or NULL if not found.
      */
     public function getStream(int $fileDescriptorNumber): ?Stream

@@ -1,5 +1,5 @@
 <?php
-namespace Test\Lucinda\Process\Stream;
+namespace Test\Lucinda\Shell\Stream;
 
 class ExceptionTest
 {

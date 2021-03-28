@@ -3,12 +3,12 @@
 <xml>
   <unit_tests>
     <unit_test>
-      <sources path="drivers" namespace="Lucinda\Process\Driver\"/>
-      <tests path="tests_drivers" namespace="Test\Lucinda\Process\Driver\"/>
+      <sources path="drivers" namespace="Lucinda\Shell\Driver\"/>
+      <tests path="tests_drivers" namespace="Test\Lucinda\Shell\Driver\"/>
     </unit_test>
     <unit_test>
-      <sources path="src" namespace="Lucinda\Process\"/>
-      <tests path="tests" namespace="Test\Lucinda\Process\"/>
+      <sources path="src" namespace="Lucinda\Shell\"/>
+      <tests path="tests" namespace="Test\Lucinda\Shell\"/>
     </unit_test>
   </unit_tests>
 </xml>

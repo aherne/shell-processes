@@ -1,12 +1,12 @@
 <?php
-namespace Lucinda\Process\Stream;
+namespace Lucinda\Shell\Stream;
 
-use Lucinda\Process\Stream\File\Mode;
+use Lucinda\Shell\Stream\File\Mode;
 
 /**
  * Encapsulates a stream that uses a file underneath
  */
-class File extends \Lucinda\Process\Stream
+class File extends \Lucinda\Shell\Stream
 {
     private $filePath;
     private $mode;
@@ -29,7 +29,7 @@ class File extends \Lucinda\Process\Stream
     
     /**
      * {@inheritDoc}
-     * @see \Lucinda\Process\Stream::getDescriptorSpecification()
+     * @see \Lucinda\Shell\Stream::getDescriptorSpecification()
      */
     public function getDescriptorSpecification()
     {

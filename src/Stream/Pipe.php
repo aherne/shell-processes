@@ -1,12 +1,12 @@
 <?php
-namespace Lucinda\Process\Stream;
+namespace Lucinda\Shell\Stream;
 
-use Lucinda\Process\Stream\File\Mode;
+use Lucinda\Shell\Stream\File\Mode;
 
 /**
  * Encapsulates a stream that uses a un-named pipe underneath
  */
-class Pipe extends \Lucinda\Process\Stream
+class Pipe extends \Lucinda\Shell\Stream
 {
     private $mode;
     
@@ -26,7 +26,7 @@ class Pipe extends \Lucinda\Process\Stream
     
     /**
      * {@inheritDoc}
-     * @see \Lucinda\Process\Stream::getDescriptorSpecification()
+     * @see \Lucinda\Shell\Stream::getDescriptorSpecification()
      */
     public function getDescriptorSpecification()
     {

@@ -1,10 +1,10 @@
 <?php
-namespace Lucinda\Process\Stream;
+namespace Lucinda\Shell\Stream;
 
-use Lucinda\Process\Stream;
-use Lucinda\Process\Stream\Select\Type;
-use Lucinda\Process\Stream\Select\InterruptedException;
-use Lucinda\Process\Stream\Select\TimeoutException;
+use Lucinda\Shell\Stream;
+use Lucinda\Shell\Stream\Select\Type;
+use Lucinda\Shell\Stream\Select\InterruptedException;
+use Lucinda\Shell\Stream\Select\TimeoutException;
 
 /**
  * Monitors streams (file descriptors) until they are ready for I/O
@@ -71,6 +71,7 @@ class Select
                 
         // executes select call
         $result = stream_select($read, $write, $except, $this->timeout);
+
         if ($result === false) {
             throw new InterruptedException();
         }
@@ -79,16 +80,5 @@ class Select
         }
         
         return $result;
-    }
-    
-    /**
-     * Gets streams added to pool by file descriptor set type
-     *
-     * @param Type $type One of enum values corresponding to a a file descriptor set type
-     * @return Stream[]
-     */
-    public function getStreams(int $type = Type::READ): array
-    {
-        return isset($this->streams[$type])?$this->streams[$type]:[];
     }
 }

@@ -1,10 +1,10 @@
 <?php
-namespace Lucinda\Process\Stream;
+namespace Lucinda\Shell\Stream;
 
 /**
  * Encapsulates a stream that uses a resource underneath (eg: socket)
  */
-class Resource extends \Lucinda\Process\Stream
+class Resource extends \Lucinda\Shell\Stream
 {
     private $resource;
     private $mode;
@@ -21,7 +21,7 @@ class Resource extends \Lucinda\Process\Stream
     
     /**
      * {@inheritDoc}
-     * @see \Lucinda\Process\Stream::getDescriptorSpecification()
+     * @see \Lucinda\Shell\Stream::getDescriptorSpecification()
      */
     public function getDescriptorSpecification()
     {

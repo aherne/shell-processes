@@ -1,5 +1,5 @@
 <?php
-namespace Lucinda\Process\Pool\Result;
+namespace Lucinda\Shell\Process\Result;
 
 /**
  * Enum encapsulating outcome statuses of executed pool process

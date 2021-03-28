@@ -1,5 +1,5 @@
 <?php
-namespace Lucinda\Process\Stream\Select;
+namespace Lucinda\Shell\Stream\Select;
 
 /**
  * Exception thrown when SELECT operation timed out

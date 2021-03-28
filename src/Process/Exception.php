@@ -1,5 +1,5 @@
 <?php
-namespace Lucinda\Process\Process;
+namespace Lucinda\Shell\Process;
 
 /**
  * Exception thrown if process setup (before execution) fails

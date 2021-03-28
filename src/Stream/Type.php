@@ -1,5 +1,5 @@
 <?php
-namespace Lucinda\Process\Stream;
+namespace Lucinda\Shell\Stream;
 
 /**
  * Enum collecting standard stream types

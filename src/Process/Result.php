@@ -1,7 +1,7 @@
 <?php
-namespace Lucinda\Process\Pool;
+namespace Lucinda\Shell\Process;
 
-use Lucinda\Process\Pool\Result\Status;
+use Lucinda\Shell\Process\Result\Status;
 
 /**
  * Encapsulates results of streams handling for a pool process
@@ -10,7 +10,6 @@ class Result
 {
     private $status;
     private $payload;
-    private $duration;
         
     /**
      * Sets stream handling outcome status for pool process
@@ -50,25 +49,5 @@ class Result
     public function getPayload()
     {
         return $this->payload;
-    }
-    
-    /**
-     * Sets duration in milliseconds that took for streams to be handled in pool process
-     *
-     * @param int $duration
-     */
-    public function setDuration(int $duration): void
-    {
-        $this->duration = $duration;
-    }
-    
-    /**
-     * Gets duration in milliseconds that took for streams to be handled in pool process
-     *
-     * @return int
-     */
-    public function getDuration(): int
-    {
-        return $this->duration;
     }
 }

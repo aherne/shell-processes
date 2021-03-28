@@ -1,5 +1,5 @@
 <?php
-namespace Lucinda\Process\Stream\Select;
+namespace Lucinda\Shell\Stream\Select;
 
 /**
  * Enum of possible SELECT file descriptor set types

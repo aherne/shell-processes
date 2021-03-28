@@ -1,5 +1,5 @@
 <?php
-namespace Lucinda\Process\Stream;
+namespace Lucinda\Shell\Stream;
 
 /**
  * Encapsulates running process stream status information handling on top of stream_get_meta_data function

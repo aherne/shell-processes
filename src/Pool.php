@@ -1,8 +1,8 @@
 <?php
-namespace Lucinda\Process;
+namespace Lucinda\Shell;
 
-use Lucinda\Process\Pool\Runnable;
-use Lucinda\Process\Pool\Result;
+use Lucinda\Shell\Process\Result;
+use Lucinda\Shell\Process\Multiplexer;
 
 /**
  * Handles a pool of processes
@@ -11,7 +11,7 @@ class Pool
 {
     private $capacity;
     
-    private $runnables = [];
+    private $processes = [];
     private $results = [];
     
     /**
@@ -27,11 +27,11 @@ class Pool
     /**
      * Adds a runnable process to pool
      *
-     * @param Runnable $runnable
+     * @param Process $process
      */
-    public function submit(Runnable $runnable): void
+    public function submit(Process $process): void
     {
-        $this->runnables[] = $runnable;
+        $this->processes[] = $process;
     }
     
     /**
@@ -39,24 +39,14 @@ class Pool
      *
      * @return Result[] List of encapsulated processes' results
      */
-    public function shutdown(): array
+    public function shutdown(Multiplexer $multiplexer): array
     {
         $results = [];
-        $batches = array_chunk($this->runnables, $this->capacity);
+        $batches = array_chunk($this->processes, $this->capacity);
         foreach ($batches as $batch) {
-            // start processes in parallel
-            foreach ($batch as $runnable) {
-                $runnable->open();
-            }
-            
-            // processes streams
-            foreach ($batch as $runnable) {
-                $results[] = $runnable->handle();
-            }
-            
-            // closes processes and strems
-            foreach ($batch as $runnable) {
-                $runnable->close();
+            $tmp = $multiplexer->run($batch);
+            foreach ($tmp as $result) {
+                $results[] = $result;
             }
         }
         return $results;

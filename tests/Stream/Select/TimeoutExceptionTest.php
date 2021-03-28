@@ -1,7 +1,6 @@
 <?php
-namespace Test\Lucinda\Process\Stream\Select;
-    
+namespace Test\Lucinda\Shell\Stream\Select;
+
 class TimeoutExceptionTest
 {
-
 }

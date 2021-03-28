@@ -13,8 +13,8 @@
     },
     "autoload": {
     	"psr-4": {
-        	"Lucinda\\Process\\Driver\\": "drivers/",
-        	"Lucinda\\Process\\": "src/"
+        	"Lucinda\\Shell\\Driver\\": "drivers/",
+        	"Lucinda\\Shell\\": "src/"
     	}
     },
     "authors": [

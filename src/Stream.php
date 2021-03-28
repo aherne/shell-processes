@@ -1,7 +1,7 @@
 <?php
-namespace Lucinda\Process;
+namespace Lucinda\Shell;
 
-use Lucinda\Process\Stream\Status;
+use Lucinda\Shell\Stream\Status;
 
 /**
  * Encapsulates a stream to read from or write to on top of a file descriptor

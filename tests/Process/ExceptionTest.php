@@ -1,7 +1,6 @@
 <?php
-namespace Test\Lucinda\Process\Process;
-    
+namespace Test\Lucinda\Shell\Process;
+
 class ExceptionTest
 {
-
 }

@@ -1,5 +1,5 @@
 <?php
-namespace Lucinda\Process\Process;
+namespace Lucinda\Shell\Process;
 
 /**
  * Encapsulates running process status information handling on top of proc_get_status function

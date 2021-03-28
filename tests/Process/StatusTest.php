@@ -1,9 +1,9 @@
 <?php
-namespace Test\Lucinda\Process\Process;
+namespace Test\Lucinda\Shell\Process;
 
-use Lucinda\Process\Process\Status;
+use Lucinda\Shell\Process\Status;
 use Lucinda\UnitTest\Result;
-use Lucinda\Process\Stream\Type;
+use Lucinda\Shell\Stream\Type;
 
 class StatusTest
 {

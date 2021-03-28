@@ -1,5 +1,5 @@
 <?php
-namespace Lucinda\Process\Stream;
+namespace Lucinda\Shell\Stream;
 
 /**
  * Exception thrown if invalid file open mode is used when defining streams

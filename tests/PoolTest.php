@@ -1,11 +1,11 @@
 <?php
-namespace Test\Lucinda\Process;
+namespace Test\Lucinda\Shell;
 
-use Lucinda\Process\Pool;
-use Lucinda\Process\Driver\BasicRunnableProcess;
-use Lucinda\Process\Process;
+use Lucinda\Shell\Pool;
+use Lucinda\Shell\Process;
 use Lucinda\UnitTest\Result;
-use Lucinda\Process\Pool\Result\Status;
+use Lucinda\Shell\Process\Result\Status;
+use Lucinda\Shell\Driver\MultiCommandRunner;
 
 class PoolTest
 {
@@ -22,7 +22,7 @@ class PoolTest
     public function submit()
     {
         for ($i=0; $i<self::PROCESS_NUMBER; $i++) {
-            $this->object->submit(new BasicRunnableProcess(new Process("php ".dirname(__DIR__).DIRECTORY_SEPARATOR."script.php")));
+            $this->object->submit(new Process("php ".dirname(__DIR__).DIRECTORY_SEPARATOR."script.php"));
         }
         return new Result(true, "tested via shutdown()");
     }
@@ -31,7 +31,7 @@ class PoolTest
     public function shutdown()
     {
         $start = microtime(true);
-        $results = $this->object->shutdown();
+        $results = $this->object->shutdown(new MultiCommandRunner(60));
         $status = true;
         foreach ($results as $result) {
             if ($result->getStatus()!=Status::COMPLETED || $result->getPayload()!="OK") {
