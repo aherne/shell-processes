@@ -9,7 +9,7 @@ This API is a light weight wrapper over PHP proc_* functions, able to execute sh
 API is 100% unit tested, fully PSR-4 compliant and only requiring PHP7.1+ interpreter. For installation you just need to write this in console:
 
 ```console
-composer require lucinda/shell
+composer require lucinda/process
 ```
 
 Then use one of main classes provided (using use **Lucinda\Shell** namespace):
