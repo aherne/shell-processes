@@ -44,6 +44,7 @@ This is superior to **shell_exec** because it will:
 - terminate if shell command execution exceeds 5 seconds
 - process STDOUT/STDERR streams separately using IO multiplexing
 - read streams in parallel using chunks
+- automatically escape shell command
 
 ## Executing Multiple Processes
 
@@ -65,6 +66,7 @@ This will:
 - open processes simultaneously
 - terminate if ANY of processes exceeds 5 seconds
 - use non-blocking approach, allowing streams processing to be done in parallel
+- automatically escape shell commands
 
 ### Pooling Multiplexed Processes
 
