@@ -11,8 +11,8 @@ use Lucinda\Shell\Stream\Select\TimeoutException;
  */
 class Select
 {
-    private $timeout;
-    private $streams = [];
+    private int $timeout;
+    private array $streams = [];
     
     /**
      * Sets timeout (in seconds) we should block waiting for a file descriptor to become ready
@@ -30,10 +30,10 @@ class Select
      * @param Stream $stream Stream to be multiplexed
      * @param Type $type One of enum values corresponding to a a file descriptor set type
      */
-    public function addStream(Stream $stream, int $type = Type::READ): void
+    public function addStream(Stream $stream, Type $type = Type::READ): void
     {
         $stream->setBlocking(false);
-        $this->streams[$type][] = $stream;
+        $this->streams[$type->value][] = $stream;
     }
     
     /**
@@ -46,28 +46,13 @@ class Select
     public function run(): int
     {
         // populates read file descriptor set
-        $read = [];
-        if (isset($this->streams[Type::READ])) {
-            foreach ($this->streams[Type::READ] as $stream) {
-                $read[] = $stream->getFileDescriptor();
-            }
-        }
+        $read = $this->populateFileDescriptorSet(Type::READ);
                 
         // populates write file descriptor set
-        $write = [];
-        if (isset($this->streams[Type::WRITE])) {
-            foreach ($this->streams[Type::WRITE] as $stream) {
-                $write[] = $stream->getFileDescriptor();
-            }
-        }
+        $write = $this->populateFileDescriptorSet(Type::WRITE);
                 
         // populates except file descriptor set
-        $except = [];
-        if (isset($this->streams[Type::EXCEPT])) {
-            foreach ($this->streams[Type::EXCEPT] as $stream) {
-                $except[] = $stream->getFileDescriptor();
-            }
-        }
+        $except = $this->populateFileDescriptorSet(Type::EXCEPT);
                 
         // executes select call
         $result = stream_select($read, $write, $except, $this->timeout);
@@ -80,5 +65,23 @@ class Select
         }
         
         return $result;
+    }
+
+    /**
+     * Populates file descriptor set for given FD type
+     *
+     * @param Type $type
+     * @return array
+     */
+    private function populateFileDescriptorSet(Type $type): array
+    {
+        $output = [];
+        $value = $type->value;
+        if (isset($this->streams[$value])) {
+            foreach ($this->streams[$value] as $stream) {
+                $output[] = $stream->getFileDescriptor();
+            }
+        }
+        return $output;
     }
 }

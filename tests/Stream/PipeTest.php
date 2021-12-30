@@ -27,11 +27,11 @@ class PipeTest
     {
         $pipes = [];
         $this->process = proc_open("php ".dirname(__DIR__, 2).DIRECTORY_SEPARATOR."script.php", [
-            Type::STDIN=>$this->stdin->getDescriptorSpecification(),
-            Type::STDOUT=>$this->stdout->getDescriptorSpecification()
+            Type::STDIN->value=>$this->stdin->getDescriptorSpecification(),
+            Type::STDOUT->value=>$this->stdout->getDescriptorSpecification()
         ], $pipes);
-        $this->stdin->setFileDescriptor($pipes[Type::STDIN]);
-        $this->stdout->setFileDescriptor($pipes[Type::STDOUT]);
+        $this->stdin->setFileDescriptor($pipes[Type::STDIN->value]);
+        $this->stdout->setFileDescriptor($pipes[Type::STDOUT->value]);
         return new Result(is_resource($this->process));
     }
         

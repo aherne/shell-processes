@@ -8,15 +8,15 @@ use Lucinda\Shell\Process\Result\Status;
  */
 class Result
 {
-    private $status;
-    private $payload;
+    private Status $status;
+    private mixed $payload;
         
     /**
      * Sets stream handling outcome status for pool process
      *
      * @param Status $status One of enum values
      */
-    public function setStatus(int $status): void
+    public function setStatus(Status $status): void
     {
         $this->status = $status;
     }
@@ -26,7 +26,7 @@ class Result
      *
      * @return Status One of enum values
      */
-    public function getStatus(): int
+    public function getStatus(): Status
     {
         return $this->status;
     }
@@ -36,7 +36,7 @@ class Result
      *
      * @param mixed $payload
      */
-    public function setPayload($payload): void
+    public function setPayload(mixed $payload): void
     {
         $this->payload = $payload;
     }
@@ -46,7 +46,7 @@ class Result
      *
      * @return mixed
      */
-    public function getPayload()
+    public function getPayload(): mixed
     {
         return $this->payload;
     }

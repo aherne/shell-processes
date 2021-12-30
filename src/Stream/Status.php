@@ -6,14 +6,14 @@ namespace Lucinda\Shell\Stream;
  */
 class Status
 {
-    private $fileDescriptor;
+    private mixed $fileDescriptor;
     
     /**
      * Constructs class by stream file descriptor
      *
      * @param resource $fileDescriptor
      */
-    public function __construct($fileDescriptor)
+    public function __construct(mixed $fileDescriptor)
     {
         $this->fileDescriptor = $fileDescriptor;
     }

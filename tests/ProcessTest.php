@@ -32,7 +32,7 @@ class ProcessTest
 
     public function addStream()
     {
-        $this->process->addStream(Type::STDOUT, new Pipe(Mode::WRITE));
+        $this->process->addStream(Type::STDOUT->value, new Pipe(Mode::WRITE));
         return new Result(true, "tested via open()");
     }
         
@@ -57,7 +57,7 @@ class ProcessTest
 
     public function getStream()
     {
-        $stream = $this->process->getStream(Type::STDOUT);
+        $stream = $this->process->getStream(Type::STDOUT->value);
         $content = $stream->read();
         return new Result($content=="OK");
     }
@@ -71,7 +71,7 @@ class ProcessTest
 
     public function close()
     {
-        $this->process->getStream(Type::STDOUT)->close();
+        $this->process->getStream(Type::STDOUT->value)->close();
         return new Result($this->process->close());
     }
 }

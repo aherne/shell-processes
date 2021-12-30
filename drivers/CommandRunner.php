@@ -9,7 +9,7 @@ use Lucinda\Shell\Process\Result\Status;
  */
 abstract class CommandRunner
 {
-    protected $timeout;
+    protected int $timeout;
     
     /**
      * Sets timeout (in seconds) we should block waiting for a file descriptor to become ready
@@ -28,7 +28,7 @@ abstract class CommandRunner
      * @param string $payload
      * @return Result
      */
-    protected function compileResult(int $status, string $payload = "")
+    protected function compileResult(Status $status, string $payload = ""): Result
     {
         $result = new Result();
         $result->setStatus($status);

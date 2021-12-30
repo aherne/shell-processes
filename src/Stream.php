@@ -8,21 +8,21 @@ use Lucinda\Shell\Stream\Status;
  */
 abstract class Stream
 {
-    private $fileDescriptor;
+    private mixed $fileDescriptor;
     
     /**
      * Gets descriptor specification for proc_open specific to stream type
      *
      * @return array|resource
      */
-    abstract public function getDescriptorSpecification();
+    abstract public function getDescriptorSpecification(): mixed;
     
     /**
      * Sets stream file descriptor of open process
      *
      * @param resource $fileDescriptor
      */
-    public function setFileDescriptor($fileDescriptor): void
+    public function setFileDescriptor(mixed $fileDescriptor): void
     {
         $this->fileDescriptor = $fileDescriptor;
     }
@@ -32,7 +32,7 @@ abstract class Stream
      *
      * @return resource
      */
-    public function getFileDescriptor()
+    public function getFileDescriptor(): mixed
     {
         return $this->fileDescriptor;
     }
@@ -64,7 +64,7 @@ abstract class Stream
      *
      * @param string $data
      * @param int $length (optional) Number of bytes to read
-     * @return bool Whether or not operation was successful
+     * @return bool Whether operation was successful
      */
     public function write(string $data, int $length=0): bool
     {
@@ -81,9 +81,9 @@ abstract class Stream
      * Reads section of stream into string (or entire stream if length is zero)
      *
      * @param int $length Number of bytes to read
-     * @return string String
+     * @return ?string String
      */
-    public function read(int $length = 0): string
+    public function read(int $length = 0): ?string
     {
         $response = null;
         if ($length==0) {
@@ -107,7 +107,7 @@ abstract class Stream
     /**
      * Closes stream of running process
      *
-     * @return bool Whether or not operation was successful
+     * @return bool Whether operation was successful
      */
     public function close(): bool
     {

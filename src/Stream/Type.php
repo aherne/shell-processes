@@ -4,9 +4,9 @@ namespace Lucinda\Shell\Stream;
 /**
  * Enum collecting standard stream types
  */
-interface Type
+enum Type: int
 {
-    const STDIN = 0;
-    const STDOUT = 1;
-    const STDERR = 2;
+    case STDIN = 0;
+    case STDOUT = 1;
+    case STDERR = 2;
 }

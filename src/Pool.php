@@ -9,11 +9,9 @@ use Lucinda\Shell\Process\Multiplexer;
  */
 class Pool
 {
-    private $capacity;
-    
-    private $processes = [];
-    private $results = [];
-    
+    private int $capacity;
+    private array $processes = [];
+
     /**
      * Instances pool by maximum number of processes allowed to work in paralel
      *

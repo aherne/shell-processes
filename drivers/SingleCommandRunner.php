@@ -26,7 +26,7 @@ class SingleCommandRunner extends CommandRunner
      */
     public function run(Process $process): Result
     {
-        $types = [Type::STDOUT, Type::STDERR];
+        $types = [Type::STDOUT->value, Type::STDERR->value];
         
         // adds STDIN/STDOUT streams, opens process and sets streams as non-blocking
         foreach ($types as $type) {
@@ -72,10 +72,10 @@ class SingleCommandRunner extends CommandRunner
             }
             
             // prepares results
-            if (!empty($results[Type::STDERR])) {
-                return $this->compileResult(Status::ERROR, $results[Type::STDERR]);
+            if (!empty($results[Type::STDERR->value])) {
+                return $this->compileResult(Status::ERROR, $results[Type::STDERR->value]);
             } else {
-                return $this->compileResult(Status::COMPLETED, $results[Type::STDOUT]);
+                return $this->compileResult(Status::COMPLETED, $results[Type::STDOUT->value]);
             }
         } catch (InterruptedException $e) {
             $process->close();

@@ -4,10 +4,10 @@ namespace Lucinda\Shell\Process\Result;
 /**
  * Enum encapsulating outcome statuses of executed pool process
  */
-interface Status
+enum Status: int
 {
-    const ERROR = 0;
-    const COMPLETED = 1;
-    const TERMINATED = 2;
-    const INTERRUPTED = 3;
+    case ERROR = 0;
+    case COMPLETED = 1;
+    case TERMINATED = 2;
+    case INTERRUPTED = 3;
 }

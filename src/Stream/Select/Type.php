@@ -4,9 +4,9 @@ namespace Lucinda\Shell\Stream\Select;
 /**
  * Enum of possible SELECT file descriptor set types
  */
-interface Type
+enum Type: int
 {
-    const READ = 1;
-    const WRITE = 2;
-    const EXCEPT = 3;
+    case READ = 1;
+    case WRITE = 2;
+    case EXCEPT = 3;
 }

@@ -8,19 +8,16 @@ use Lucinda\Shell\Stream\File\Mode;
  */
 class Pipe extends \Lucinda\Shell\Stream
 {
-    private $mode;
+    private Mode $mode;
     
     /**
      * Sets location of file data will be streamed into
      *
-     * @param Mode $fileMode One of enum values, identifying pipe access mode.
+     * @param Mode $accessMode One of enum values, identifying pipe access mode.
      * @throws Exception If invalid file mode is supplied
      */
-    public function __construct(string $accessMode)
+    public function __construct(Mode $accessMode)
     {
-        if (!in_array($accessMode, ["r", "w", "a"])) {
-            throw new Exception("Invalid file mode: ".$accessMode);
-        }
         $this->mode = $accessMode;
     }
     
@@ -28,8 +25,8 @@ class Pipe extends \Lucinda\Shell\Stream
      * {@inheritDoc}
      * @see \Lucinda\Shell\Stream::getDescriptorSpecification()
      */
-    public function getDescriptorSpecification()
+    public function getDescriptorSpecification(): array
     {
-        return ["pipe", $this->mode];
+        return ["pipe", $this->mode->value];
     }
 }

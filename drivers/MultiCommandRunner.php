@@ -24,10 +24,10 @@ class MultiCommandRunner extends CommandRunner implements Multiplexer
      */
     public function run(array $processes): array
     {
-        $types = [Type::STDOUT, Type::STDERR];
+        $types = [Type::STDOUT->value, Type::STDERR->value];
         
         // adds STDIN/STDOUT streams, opens process and sets streams as non-blocking
-        foreach ($processes as $i=>$process) {
+        foreach ($processes as $process) {
             foreach ($types as $type) {
                 $process->addStream($type, new Pipe(Mode::WRITE));
             }
@@ -81,10 +81,10 @@ class MultiCommandRunner extends CommandRunner implements Multiplexer
             
             // prepares results
             foreach ($results as $i=>$info) {
-                if (!empty($info[Type::STDERR])) {
-                    $results[$i] = $this->compileResult(Status::ERROR, $info[Type::STDERR]);
+                if (!empty($info[Type::STDERR->value])) {
+                    $results[$i] = $this->compileResult(Status::ERROR, $info[Type::STDERR->value]);
                 } else {
-                    $results[$i] = $this->compileResult(Status::COMPLETED, $info[Type::STDOUT]);
+                    $results[$i] = $this->compileResult(Status::COMPLETED, $info[Type::STDOUT->value]);
                 }
             }
         } catch (InterruptedException $e) {

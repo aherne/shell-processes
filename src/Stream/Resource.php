@@ -6,15 +6,14 @@ namespace Lucinda\Shell\Stream;
  */
 class Resource extends \Lucinda\Shell\Stream
 {
-    private $resource;
-    private $mode;
-    
+    private mixed $resource;
+
     /**
      * Sets resource data will be streamed into
      *
      * @param resource $resource
      */
-    public function __construct($resource)
+    public function __construct(mixed $resource)
     {
         $this->resource = $resource;
     }
@@ -23,7 +22,7 @@ class Resource extends \Lucinda\Shell\Stream
      * {@inheritDoc}
      * @see \Lucinda\Shell\Stream::getDescriptorSpecification()
      */
-    public function getDescriptorSpecification()
+    public function getDescriptorSpecification(): mixed
     {
         return $this->resource;
     }

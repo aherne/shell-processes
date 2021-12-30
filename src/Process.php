@@ -9,18 +9,18 @@ use Lucinda\Shell\Process\Status;
  */
 class Process
 {
-    private $command;
-    private $workingDirectory;
-    private $environmentVariables = [];
+    private string $command;
+    private string $workingDirectory = "";
+    private array $environmentVariables = [];
     
-    private $fileDescriptor;
-    private $streams = [];
+    private mixed $fileDescriptor; // resource @ proc_open
+    private array $streams = [];
     
     /**
      * Constructs a process by shell command
      *
      * @param string $command Shell command to execute.
-     * @param bool $autoEscape Whether or not command should be escaped using escapeshellcmd
+     * @param bool $autoEscape Whether command should be escaped using escapeshellcmd
      */
     public function __construct(string $command, bool $autoEscape = true)
     {
@@ -117,7 +117,7 @@ class Process
      */
     public function getStream(int $fileDescriptorNumber): ?Stream
     {
-        return (isset($this->streams[$fileDescriptorNumber])?$this->streams[$fileDescriptorNumber]:null);
+        return ($this->streams[$fileDescriptorNumber] ?? null);
     }
     
     /**
