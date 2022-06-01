@@ -1,4 +1,5 @@
 <?php
+
 namespace Lucinda\Shell\Stream;
 
 use Lucinda\Shell\Stream\File\Mode;
@@ -9,7 +10,7 @@ use Lucinda\Shell\Stream\File\Mode;
 class Pipe extends \Lucinda\Shell\Stream
 {
     private Mode $mode;
-    
+
     /**
      * Sets location of file data will be streamed into
      *
@@ -20,12 +21,12 @@ class Pipe extends \Lucinda\Shell\Stream
     {
         $this->mode = $accessMode;
     }
-    
+
     /**
      * {@inheritDoc}
      * @see \Lucinda\Shell\Stream::getDescriptorSpecification()
      */
-    public function getDescriptorSpecification(): array
+    public function getDescriptorSpecification(): mixed
     {
         return ["pipe", $this->mode->value];
     }

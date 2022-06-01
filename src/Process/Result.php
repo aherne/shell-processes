@@ -1,4 +1,5 @@
 <?php
+
 namespace Lucinda\Shell\Process;
 
 use Lucinda\Shell\Process\Result\Status;
@@ -10,7 +11,7 @@ class Result
 {
     private Status $status;
     private mixed $payload;
-        
+
     /**
      * Sets stream handling outcome status for pool process
      *
@@ -20,7 +21,7 @@ class Result
     {
         $this->status = $status;
     }
-    
+
     /**
      * Gets stream handling outcome status of executed pool process
      *
@@ -30,7 +31,7 @@ class Result
     {
         return $this->status;
     }
-    
+
     /**
      * Sets payload produced by pool process execution
      *
@@ -40,7 +41,7 @@ class Result
     {
         $this->payload = $payload;
     }
-    
+
     /**
      * Gets payload produced by pool process execution
      *

@@ -1,4 +1,5 @@
 <?php
+
 namespace Lucinda\Shell\Process;
 
 /**
@@ -7,7 +8,7 @@ namespace Lucinda\Shell\Process;
 class Status
 {
     private mixed $fileDescriptor;
-    
+
     /**
      * Constructs class by process file descriptor
      *
@@ -17,7 +18,7 @@ class Status
     {
         $this->fileDescriptor = $fileDescriptor;
     }
-    
+
     /**
      * Gets PID of running process
      *
@@ -27,7 +28,7 @@ class Status
     {
         return proc_get_status($this->fileDescriptor)["pid"];
     }
-    
+
     /**
      * Checks if process is still running
      *
@@ -37,7 +38,7 @@ class Status
     {
         return proc_get_status($this->fileDescriptor)["running"];
     }
-    
+
     /**
      * Checks if process was terminated
      *
@@ -47,7 +48,7 @@ class Status
     {
         return proc_get_status($this->fileDescriptor)["signaled"];
     }
-    
+
     /**
      * Checks if process was stopped
      *

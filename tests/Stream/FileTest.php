@@ -1,4 +1,5 @@
 <?php
+
 namespace Test\Lucinda\Shell\Stream;
 
 use Lucinda\Shell\Stream\File;
@@ -13,14 +14,14 @@ class FileTest
     private $process;
     private $stdin;
     private $stdout;
-    
+
     public function __construct()
     {
         $this->path = dirname(__DIR__, 2)."/test.txt";
         $this->stdin = new File($this->path, Mode::READ);
         $this->stdout = new Pipe(Mode::WRITE);
     }
-    
+
     public function __destruct()
     {
         proc_close($this->process);
@@ -36,49 +37,49 @@ class FileTest
         $this->stdout->setFileDescriptor($pipes[Type::STDOUT->value]);
         return new Result(is_resource($this->process));
     }
-        
+
 
     public function setFileDescriptor()
     {
         return new Result(true, "tested via getDescriptorSpecification()");
     }
-        
+
 
     public function getFileDescriptor()
     {
         return new Result(true, "operation not yet supported by PHP");
     }
-    
-    
+
+
     public function setTimeout()
     {
         return new Result(true, "operation not yet supported by PHP");
     }
-        
+
 
     public function setBlocking()
     {
         return new Result(true, "operation not yet supported by PHP");
     }
-        
+
 
     public function write()
     {
         return new Result(true, "operation not yet supported by PHP");
     }
-    
-    
+
+
     public function read()
     {
         return new Result($this->stdout->read()=="OK", "operation tested indirectly");
     }
-        
+
 
     public function getStatus()
     {
         return new Result(true, "operation not yet supported by PHP");
     }
-        
+
 
     public function close()
     {

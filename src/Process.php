@@ -1,4 +1,5 @@
 <?php
+
 namespace Lucinda\Shell;
 
 use Lucinda\Shell\Process\Exception;
@@ -11,11 +12,17 @@ class Process
 {
     private string $command;
     private string $workingDirectory = "";
+    /**
+     * @var array<string,string>
+     */
     private array $environmentVariables = [];
-    
+
     private mixed $fileDescriptor; // resource @ proc_open
+    /**
+     * @var array<int,Stream>
+     */
     private array $streams = [];
-    
+
     /**
      * Constructs a process by shell command
      *
@@ -24,9 +31,9 @@ class Process
      */
     public function __construct(string $command, bool $autoEscape = true)
     {
-        $this->command = ($autoEscape?escapeshellcmd($command):$command);
+        $this->command = ($autoEscape ? escapeshellcmd($command) : $command);
     }
-    
+
     /**
      * Sets working directory command should be executed from
      *
@@ -40,7 +47,7 @@ class Process
         }
         $this->workingDirectory = $workingDirectory;
     }
-    
+
     /**
      * Adds environment variable to be made available in process to execute
      *
@@ -51,7 +58,7 @@ class Process
     {
         $this->environmentVariables[$key] = $value;
     }
-    
+
     /**
      * Adds a stream to be tracked for process to execute
      *
@@ -62,7 +69,7 @@ class Process
     {
         $this->streams[$fileDescriptorNumber] = $stream;
     }
-        
+
     /**
      * Starts process
      *
@@ -74,21 +81,27 @@ class Process
         foreach ($this->streams as $fileDescriptorNumber=>$object) {
             $descriptors[$fileDescriptorNumber] = $object->getDescriptorSpecification();
         }
-        
+
         $pipes = [];
-        $resource = proc_open($this->command, $descriptors, $pipes, $this->workingDirectory, $this->environmentVariables);
+        $resource = proc_open(
+            $this->command,
+            $descriptors,
+            $pipes,
+            $this->workingDirectory,
+            $this->environmentVariables
+        );
         if ($resource === false || !is_resource($resource)) {
             return false;
         }
         $this->fileDescriptor = $resource;
-                
+
         foreach ($pipes as $fileDescriptorNumber=>$childFileDescriptor) {
             $this->streams[$fileDescriptorNumber]->setFileDescriptor($childFileDescriptor);
         }
-        
+
         return true;
     }
-    
+
     /**
      * Checks if process still exists
      *
@@ -98,7 +111,7 @@ class Process
     {
         return is_resource($this->fileDescriptor);
     }
-    
+
     /**
      * Gets process status information
      *
@@ -108,7 +121,7 @@ class Process
     {
         return new Status($this->fileDescriptor);
     }
-    
+
     /**
      * Gets stream of running process
      *
@@ -119,7 +132,7 @@ class Process
     {
         return ($this->streams[$fileDescriptorNumber] ?? null);
     }
-    
+
     /**
      * Terminates (kills) process
      *
@@ -129,7 +142,7 @@ class Process
     {
         return proc_terminate($this->fileDescriptor, SIGKILL);
     }
-    
+
     /**
      * Closes process gracefully
      *

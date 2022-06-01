@@ -1,4 +1,5 @@
 <?php
+
 namespace Test\Lucinda\Shell;
 
 use Lucinda\Shell\Pool;
@@ -9,11 +10,11 @@ use Lucinda\Shell\Driver\MultiCommandRunner;
 
 class PoolTest
 {
-    const POOL_SIZE = 3;
-    const PROCESS_NUMBER = 4;
-    
+    public const POOL_SIZE = 3;
+    public const PROCESS_NUMBER = 4;
+
     private $object;
-    
+
     public function __construct()
     {
         $this->object = new Pool(self::POOL_SIZE);
@@ -26,7 +27,7 @@ class PoolTest
         }
         return new Result(true, "tested via shutdown()");
     }
-        
+
 
     public function shutdown()
     {

@@ -1,4 +1,5 @@
 <?php
+
 namespace Test\Lucinda\Shell;
 
 use Lucinda\Shell\Process;
@@ -10,7 +11,7 @@ use Lucinda\UnitTest\Result;
 class ProcessTest
 {
     private $process;
-    
+
     public function __construct()
     {
         $this->process = new Process("php script.php");
@@ -21,39 +22,39 @@ class ProcessTest
         $this->process->setWorkingDirectory(dirname(__DIR__));
         return new Result(true, "tested via open()");
     }
-        
+
 
     public function addEnvironmentVariable()
     {
         $this->process->addEnvironmentVariable("test", "me");
         return new Result(true, "tested via open()");
     }
-        
+
 
     public function addStream()
     {
         $this->process->addStream(Type::STDOUT->value, new Pipe(Mode::WRITE));
         return new Result(true, "tested via open()");
     }
-        
+
 
     public function open()
     {
         return new Result($this->process->open());
     }
-        
+
 
     public function isOpen()
     {
         return new Result($this->process->isOpen());
     }
-    
-    
+
+
     public function getStatus()
     {
         return new Result($this->process->getStatus()->getProcessID()>0);
     }
-        
+
 
     public function getStream()
     {
@@ -61,13 +62,13 @@ class ProcessTest
         $content = $stream->read();
         return new Result($content=="OK");
     }
-        
+
 
     public function terminate()
     {
         return new Result($this->process->terminate());
     }
-        
+
 
     public function close()
     {

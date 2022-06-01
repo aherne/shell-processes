@@ -1,4 +1,5 @@
 <?php
+
 namespace Lucinda\Shell;
 
 use Lucinda\Shell\Process\Result;
@@ -10,6 +11,9 @@ use Lucinda\Shell\Process\Multiplexer;
 class Pool
 {
     private int $capacity;
+    /**
+     * @var Process[]
+     */
     private array $processes = [];
 
     /**
@@ -21,7 +25,7 @@ class Pool
     {
         $this->capacity = $capacity;
     }
-    
+
     /**
      * Adds a runnable process to pool
      *
@@ -31,7 +35,7 @@ class Pool
     {
         $this->processes[] = $process;
     }
-    
+
     /**
      * Executes processes in pool using capacity-sized batches, returning results
      *

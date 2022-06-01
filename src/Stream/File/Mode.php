@@ -1,4 +1,5 @@
 <?php
+
 namespace Lucinda\Shell\Stream\File;
 
 /**

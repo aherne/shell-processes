@@ -1,4 +1,5 @@
 <?php
+
 namespace Lucinda\Shell\Driver;
 
 use Lucinda\Shell\Process\Result;
@@ -10,7 +11,7 @@ use Lucinda\Shell\Process\Result\Status;
 abstract class CommandRunner
 {
     protected int $timeout;
-    
+
     /**
      * Sets timeout (in seconds) we should block waiting for a file descriptor to become ready
      *
@@ -20,7 +21,7 @@ abstract class CommandRunner
     {
         $this->timeout = $timeout;
     }
-    
+
     /**
      * Compiles a result object based on data supplied
      *

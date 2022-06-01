@@ -1,4 +1,5 @@
 <?php
+
 namespace Lucinda\Shell\Stream;
 
 use Lucinda\Shell\Stream;
@@ -12,8 +13,11 @@ use Lucinda\Shell\Stream\Select\TimeoutException;
 class Select
 {
     private int $timeout;
+    /**
+     * @var array<int,Stream[]>
+     */
     private array $streams = [];
-    
+
     /**
      * Sets timeout (in seconds) we should block waiting for a file descriptor to become ready
      *
@@ -23,7 +27,7 @@ class Select
     {
         $this->timeout = $timeout;
     }
-    
+
     /**
      * Adds stream to pool by file descriptor set type
      *
@@ -35,7 +39,7 @@ class Select
         $stream->setBlocking(false);
         $this->streams[$type->value][] = $stream;
     }
-    
+
     /**
      * Monitors streams added to pool
      *
@@ -47,13 +51,13 @@ class Select
     {
         // populates read file descriptor set
         $read = $this->populateFileDescriptorSet(Type::READ);
-                
+
         // populates write file descriptor set
         $write = $this->populateFileDescriptorSet(Type::WRITE);
-                
+
         // populates except file descriptor set
         $except = $this->populateFileDescriptorSet(Type::EXCEPT);
-                
+
         // executes select call
         $result = stream_select($read, $write, $except, $this->timeout);
 
@@ -63,7 +67,7 @@ class Select
         if ($result === 0) {
             throw new TimeoutException();
         }
-        
+
         return $result;
     }
 
@@ -71,7 +75,7 @@ class Select
      * Populates file descriptor set for given FD type
      *
      * @param Type $type
-     * @return array
+     * @return array<int,mixed>
      */
     private function populateFileDescriptorSet(Type $type): array
     {

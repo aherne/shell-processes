@@ -1,4 +1,5 @@
 <?php
+
 namespace Lucinda\Shell\Driver;
 
 use Lucinda\Shell\Process;
@@ -16,8 +17,8 @@ use Lucinda\Shell\Stream\Select\TimeoutException;
  */
 class SingleCommandRunner extends CommandRunner
 {
-    const CHUNK_SIZE = 1024;
-        
+    public const CHUNK_SIZE = 1024;
+
     /**
      * Executes process and returns result
      *
@@ -27,7 +28,7 @@ class SingleCommandRunner extends CommandRunner
     public function run(Process $process): Result
     {
         $types = [Type::STDOUT->value, Type::STDERR->value];
-        
+
         // adds STDIN/STDOUT streams, opens process and sets streams as non-blocking
         foreach ($types as $type) {
             $process->addStream($type, new Pipe(Mode::WRITE));
@@ -36,42 +37,10 @@ class SingleCommandRunner extends CommandRunner
         foreach ($types as $type) {
             $process->getStream($type)->setBlocking(false);
         }
-        
+
         // performs multiplexing
         try {
-            // initializes streams and results
-            $streams = [];
-            foreach ($types as $type) {
-                $streams[$type] = $process->getStream($type);
-                $results[$type] = "";
-            }
-            
-            // consumes streams
-            while (!empty($streams)) {
-                // runs SELECT
-                $select = new Select($this->timeout);
-                foreach ($streams as $type=>$stream) {
-                    $select->addStream($stream);
-                }
-                $select->run();
-                
-                // reads streams in 1024 bytes chunks
-                foreach ($streams as $type=>$stream) {
-                    // reads a 1024 byte chunk of streams' payload and appends it to response
-                    $results[$type] .= $stream->read(self::CHUNK_SIZE);
-                    
-                    // if nothing more to process, mark stream as done and close it
-                    if ($stream->getStatus()->isEndOfFile()) {
-                        unset($streams[$type]);
-                        $stream->close();
-                        if (empty($streams)) {
-                            $process->close();
-                        }
-                    }
-                }
-            }
-            
-            // prepares results
+            $results = $this->runCommand($process, $types);
             if (!empty($results[Type::STDERR->value])) {
                 return $this->compileResult(Status::ERROR, $results[Type::STDERR->value]);
             } else {
@@ -84,7 +53,53 @@ class SingleCommandRunner extends CommandRunner
             $process->terminate();
             return $this->compileResult(Status::TERMINATED);
         }
-        
+    }
+
+    /**
+     * Runs command and returns result based on output stream used
+     *
+     * @param Process $process
+     * @param int[] $types
+     * @return array<int,string>
+     * @throws InterruptedException
+     * @throws TimeoutException
+     */
+    private function runCommand(Process $process, array $types): array
+    {
+        $results = [];
+
+        // initializes streams and results
+        $streams = [];
+        foreach ($types as $type) {
+            $streams[$type] = $process->getStream($type);
+            $results[$type] = "";
+        }
+
+        // consumes streams
+        while (!empty($streams)) {
+            // runs SELECT
+            $select = new Select($this->timeout);
+            foreach ($streams as $type=>$stream) {
+                $select->addStream($stream);
+            }
+            $select->run();
+
+            // reads streams in 1024 bytes chunks
+            foreach ($streams as $type=>$stream) {
+                // reads a 1024 byte chunk of streams' payload and appends it to response
+                $results[$type] .= $stream->read(self::CHUNK_SIZE);
+
+                // if nothing more to process, mark stream as done and close it
+                if ($stream->getStatus()->isEndOfFile()) {
+                    unset($streams[$type]);
+                    $stream->close();
+                    if (empty($streams)) {
+                        $process->close();
+                    }
+                }
+            }
+        }
+
         return $results;
     }
 }

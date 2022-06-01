@@ -1,4 +1,5 @@
 <?php
+
 namespace Lucinda\Shell\Stream;
 
 /**
@@ -17,7 +18,7 @@ class Resource extends \Lucinda\Shell\Stream
     {
         $this->resource = $resource;
     }
-    
+
     /**
      * {@inheritDoc}
      * @see \Lucinda\Shell\Stream::getDescriptorSpecification()

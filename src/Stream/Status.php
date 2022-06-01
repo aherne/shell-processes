@@ -1,4 +1,5 @@
 <?php
+
 namespace Lucinda\Shell\Stream;
 
 /**
@@ -7,7 +8,7 @@ namespace Lucinda\Shell\Stream;
 class Status
 {
     private mixed $fileDescriptor;
-    
+
     /**
      * Constructs class by stream file descriptor
      *
@@ -17,7 +18,7 @@ class Status
     {
         $this->fileDescriptor = $fileDescriptor;
     }
-    
+
     /**
      * Checks if stream has timed out (available if stream_set_timeout was used)
      *
@@ -27,7 +28,7 @@ class Status
     {
         return stream_get_meta_data($this->fileDescriptor)["timed_out"];
     }
-    
+
     /**
      * Checks if stream is in blocking I/0 mode
      *
@@ -37,7 +38,7 @@ class Status
     {
         return stream_get_meta_data($this->fileDescriptor)["blocked"];
     }
-    
+
     /**
      * Check if stream has reached end-of-file
      *
@@ -47,7 +48,7 @@ class Status
     {
         return stream_get_meta_data($this->fileDescriptor)["eof"];
     }
-    
+
     /**
      * Checks if current stream can be seeked into.
      *

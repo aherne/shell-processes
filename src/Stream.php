@@ -1,4 +1,5 @@
 <?php
+
 namespace Lucinda\Shell;
 
 use Lucinda\Shell\Stream\Status;
@@ -9,14 +10,14 @@ use Lucinda\Shell\Stream\Status;
 abstract class Stream
 {
     private mixed $fileDescriptor;
-    
+
     /**
      * Gets descriptor specification for proc_open specific to stream type
      *
-     * @return array|resource
+     * @return mixed
      */
     abstract public function getDescriptorSpecification(): mixed;
-    
+
     /**
      * Sets stream file descriptor of open process
      *
@@ -26,7 +27,7 @@ abstract class Stream
     {
         $this->fileDescriptor = $fileDescriptor;
     }
-    
+
     /**
      * Gets file descriptor of running stream. Use only if you need special processing not covered by methods in class!
      *
@@ -36,7 +37,7 @@ abstract class Stream
     {
         return $this->fileDescriptor;
     }
-    
+
     /**
      * Sets stream timeout. To check if exceeded, use StreamStatus::isTimedOut!
      *
@@ -47,7 +48,7 @@ abstract class Stream
     {
         return stream_set_timeout($this->fileDescriptor, $seconds, 0);
     }
-    
+
     /**
      * Sets current stream as non-blocking (forcing usage of stream_select to handle)
      *
@@ -58,7 +59,7 @@ abstract class Stream
     {
         return stream_set_blocking($this->fileDescriptor, $isBlocking);
     }
-    
+
     /**
      * Writes section of string into stream
      *
@@ -76,7 +77,7 @@ abstract class Stream
         }
         return $response!==false;
     }
-    
+
     /**
      * Reads section of stream into string (or entire stream if length is zero)
      *
@@ -91,9 +92,9 @@ abstract class Stream
         } else {
             $response = fread($this->fileDescriptor, $length);
         }
-        return ($response!==false?$response:null);
+        return ($response!==false ? $response : null);
     }
-    
+
     /**
      * Gets running status of stream
      *
@@ -103,7 +104,7 @@ abstract class Stream
     {
         return new Status($this->fileDescriptor);
     }
-    
+
     /**
      * Closes stream of running process
      *

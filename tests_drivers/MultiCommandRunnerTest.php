@@ -1,4 +1,5 @@
 <?php
+
 namespace Test\Lucinda\Shell\Driver;
 
 use Lucinda\Shell\Process;
@@ -17,7 +18,7 @@ class MultiCommandRunnerTest
         }
         $simpleMultiplexer = new MultiCommandRunner(10);
         $results = $simpleMultiplexer->run($processes);
-        
+
         $status = true;
         foreach ($results as $result) {
             if ($result->getStatus()!=Status::COMPLETED || $result->getPayload()!="OK") {
@@ -25,7 +26,7 @@ class MultiCommandRunnerTest
                 break;
             }
         }
-        
+
         return new Result($status && round(microtime(true)-$start)==1);
     }
 }
