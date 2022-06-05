@@ -26,8 +26,8 @@ class Process
     /**
      * Constructs a process by shell command
      *
-     * @param string $command Shell command to execute.
-     * @param bool $autoEscape Whether command should be escaped using escapeshellcmd
+     * @param string $command    Shell command to execute.
+     * @param bool   $autoEscape Whether command should be escaped using escapeshellcmd
      */
     public function __construct(string $command, bool $autoEscape = true)
     {
@@ -37,7 +37,7 @@ class Process
     /**
      * Sets working directory command should be executed from
      *
-     * @param string $workingDirectory Absolute path to to working directory
+     * @param  string $workingDirectory Absolute path to to working directory
      * @throws Exception If directory doesn't exist
      */
     public function setWorkingDirectory(string $workingDirectory): void
@@ -62,8 +62,8 @@ class Process
     /**
      * Adds a stream to be tracked for process to execute
      *
-     * @param int $fileDescriptorNumber One of \Lucinda\Shell\Stream\Type enum values or a custom number greater than 2
-     * @param Stream $stream Stream to be tracked
+     * @param int    $fileDescriptorNumber One of \Lucinda\Shell\Stream\Type enum values or a custom number greater than 2
+     * @param Stream $stream               Stream to be tracked
      */
     public function addStream(int $fileDescriptorNumber, Stream $stream): void
     {
@@ -125,7 +125,7 @@ class Process
     /**
      * Gets stream of running process
      *
-     * @param int $fileDescriptorNumber One of \Lucinda\Shell\Stream\Type enum values or a custom number greater than 2
+     * @param  int $fileDescriptorNumber One of \Lucinda\Shell\Stream\Type enum values or a custom number greater than 2
      * @return Stream|NULL Corresponding stream or NULL if not found.
      */
     public function getStream(int $fileDescriptorNumber): ?Stream

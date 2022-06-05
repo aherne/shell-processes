@@ -12,7 +12,7 @@ interface Multiplexer
     /**
      * Runs multiple processes and returns their results
      *
-     * @param Process[] $processes
+     * @param  Process[] $processes
      * @return Result[]
      */
     public function run(array $processes): array;

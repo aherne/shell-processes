@@ -30,10 +30,14 @@ class FileTest
     public function getDescriptorSpecification()
     {
         $pipes = [];
-        $this->process = proc_open("php ".dirname(__DIR__, 2).DIRECTORY_SEPARATOR."script.php", [
+        $this->process = proc_open(
+            "php ".dirname(__DIR__, 2).DIRECTORY_SEPARATOR."script.php",
+            [
             Type::STDIN->value=>$this->stdin->getDescriptorSpecification(),
             Type::STDOUT->value=>$this->stdout->getDescriptorSpecification()
-        ], $pipes);
+            ],
+            $pipes
+        );
         $this->stdout->setFileDescriptor($pipes[Type::STDOUT->value]);
         return new Result(is_resource($this->process));
     }

@@ -14,7 +14,7 @@ class Pipe extends \Lucinda\Shell\Stream
     /**
      * Sets location of file data will be streamed into
      *
-     * @param Mode $accessMode One of enum values, identifying pipe access mode.
+     * @param  Mode $accessMode One of enum values, identifying pipe access mode.
      * @throws Exception If invalid file mode is supplied
      */
     public function __construct(Mode $accessMode)
@@ -24,6 +24,7 @@ class Pipe extends \Lucinda\Shell\Stream
 
     /**
      * {@inheritDoc}
+     *
      * @see \Lucinda\Shell\Stream::getDescriptorSpecification()
      */
     public function getDescriptorSpecification(): mixed

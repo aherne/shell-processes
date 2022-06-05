@@ -13,9 +13,13 @@ class StatusTest
     public function __construct()
     {
         $pipes = [];
-        $this->process = proc_open("php ".dirname(__DIR__, 2).DIRECTORY_SEPARATOR."script.php", [
+        $this->process = proc_open(
+            "php ".dirname(__DIR__, 2).DIRECTORY_SEPARATOR."script.php",
+            [
             Type::STDOUT->value=>["pipe","w"]
-        ], $pipes);
+            ],
+            $pipes
+        );
     }
 
     public function __destruct()

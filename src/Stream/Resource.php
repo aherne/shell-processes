@@ -21,6 +21,7 @@ class Resource extends \Lucinda\Shell\Stream
 
     /**
      * {@inheritDoc}
+     *
      * @see \Lucinda\Shell\Stream::getDescriptorSpecification()
      */
     public function getDescriptorSpecification(): mixed

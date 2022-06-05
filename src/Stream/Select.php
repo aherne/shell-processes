@@ -32,7 +32,7 @@ class Select
      * Adds stream to pool by file descriptor set type
      *
      * @param Stream $stream Stream to be multiplexed
-     * @param Type $type One of enum values corresponding to a a file descriptor set type
+     * @param Type   $type   One of enum values corresponding to a a file descriptor set type
      */
     public function addStream(Stream $stream, Type $type = Type::READ): void
     {
@@ -74,7 +74,7 @@ class Select
     /**
      * Populates file descriptor set for given FD type
      *
-     * @param Type $type
+     * @param  Type $type
      * @return array<int,mixed>
      */
     private function populateFileDescriptorSet(Type $type): array

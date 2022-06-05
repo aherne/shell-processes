@@ -16,7 +16,7 @@ class File extends \Lucinda\Shell\Stream
      * Sets location of file data will be streamed into
      *
      * @param string $filePath Absolute location of file data will be streamed into
-     * @param Mode $fileMode One of enum values, identifying file access mode.
+     * @param Mode   $fileMode One of enum values, identifying file access mode.
      */
     public function __construct(string $filePath, Mode $fileMode)
     {
@@ -26,6 +26,7 @@ class File extends \Lucinda\Shell\Stream
 
     /**
      * {@inheritDoc}
+     *
      * @see \Lucinda\Shell\Stream::getDescriptorSpecification()
      */
     public function getDescriptorSpecification(): mixed

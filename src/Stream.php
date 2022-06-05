@@ -41,7 +41,7 @@ abstract class Stream
     /**
      * Sets stream timeout. To check if exceeded, use StreamStatus::isTimedOut!
      *
-     * @param int $seconds Number of seconds to time out stream
+     * @param  int $seconds Number of seconds to time out stream
      * @return bool Whether or not operation was successful
      */
     public function setTimeout(int $seconds): bool
@@ -52,7 +52,7 @@ abstract class Stream
     /**
      * Sets current stream as non-blocking (forcing usage of stream_select to handle)
      *
-     * @param bool $isBlocking
+     * @param  bool $isBlocking
      * @return bool Whether or not operation was successful
      */
     public function setBlocking(bool $isBlocking): bool
@@ -63,8 +63,8 @@ abstract class Stream
     /**
      * Writes section of string into stream
      *
-     * @param string $data
-     * @param int $length (optional) Number of bytes to read
+     * @param  string $data
+     * @param  int    $length (optional) Number of bytes to read
      * @return bool Whether operation was successful
      */
     public function write(string $data, int $length=0): bool
@@ -81,7 +81,7 @@ abstract class Stream
     /**
      * Reads section of stream into string (or entire stream if length is zero)
      *
-     * @param int $length Number of bytes to read
+     * @param  int $length Number of bytes to read
      * @return ?string String
      */
     public function read(int $length = 0): ?string
